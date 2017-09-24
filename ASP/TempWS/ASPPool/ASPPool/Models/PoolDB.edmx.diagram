@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0c884d9514ec4018b9bf7e8146fca0b4" Name="Diagram1">
+        <EntityTypeShape EntityType="PoolModel.CheckAnswer" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoolModel.Pool" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoolModel.Question" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoolModel.QuestionType" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoolModel.User" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoolModel.UserCheckAnswer" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoolModel.UserOpenAnswer" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="PoolModel.FK_CheckAnswer_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="PoolModel.FK_UserCheckAnswer_CheckAnswer" ManuallyRouted="false" />
+        <AssociationConnector Association="PoolModel.FK_Question_Pool" ManuallyRouted="false" />
+        <AssociationConnector Association="PoolModel.FK_Question_QuestionType" ManuallyRouted="false" />
+        <AssociationConnector Association="PoolModel.FK_UserOpenAnswer_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="PoolModel.FK_UserCheckAnswer_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PoolModel.FK_UserOpenAnswer_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

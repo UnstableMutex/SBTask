@@ -1,0 +1,40 @@
+﻿
+@using System.Collections
+@using ASPPools.Models
+@model UserPool
+@{
+    Layout = null;
+}
+
+<h1>Hello @Model.User.Name</h1>
+<form action="GetResults" method="post">
+    @foreach (var q in Model.Pool.Questions)
+    {
+        if (q.QuestionType_ID == 2)
+        {
+            <h2>
+                @q.Question1
+            </h2>
+
+            foreach (var a in q.CheckAnswers)
+            {
+                string name = "[" + q.ID + "][" + a.ID + "]CheckAnswer";
+                <div>
+                    <label>
+                        <input type="checkbox" name="@name" />@a.Answer
+                    </label>
+                </div>
+            }
+        }
+        if (q.QuestionType_ID == 1)
+        {
+            <div class="form-group">
+                <label for="TextAnswer">Ответ:</label>
+                @Html.TextBox("[" + q.ID + "].TextAnswer", "", new { @class = "form-control" })
+            </div>
+        }
+    }
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Show Results</button>
+    </div>
+</form>

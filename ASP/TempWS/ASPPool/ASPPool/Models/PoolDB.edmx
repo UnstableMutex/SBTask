@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PoolModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CheckAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question_ID" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pool">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pool_ID" Type="smallint" Nullable="false" />
+          <Property Name="Question" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="QuestionType_ID" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserCheckAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_ID" Type="smallint" Nullable="false" />
+          <Property Name="CheckAnswer_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserOpenAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Answer" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Question_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CheckAnswer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="CheckAnswer" Type="Self.CheckAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckAnswer">
+              <PropertyRef Name="Question_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Pool">
+          <End Role="Pool" Type="Self.Pool" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pool">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Pool_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_QuestionType">
+          <End Role="QuestionType" Type="Self.QuestionType" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuestionType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCheckAnswer_CheckAnswer">
+          <End Role="CheckAnswer" Type="Self.CheckAnswer" Multiplicity="1" />
+          <End Role="UserCheckAnswer" Type="Self.UserCheckAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckAnswer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserCheckAnswer">
+              <PropertyRef Name="CheckAnswer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCheckAnswer_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserCheckAnswer" Type="Self.UserCheckAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserCheckAnswer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOpenAnswer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="UserOpenAnswer" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOpenAnswer">
+              <PropertyRef Name="Question_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOpenAnswer_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOpenAnswer" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOpenAnswer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PoolModelContainer">
+          <EntitySet Name="CheckAnswer" EntityType="Self.CheckAnswer" Schema="web" store:Type="Tables" />
+          <EntitySet Name="Pool" EntityType="Self.Pool" Schema="web" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="web" store:Type="Tables" />
+          <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="web" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="web" store:Type="Tables" />
+          <EntitySet Name="UserCheckAnswer" EntityType="Self.UserCheckAnswer" Schema="web" store:Type="Tables" />
+          <EntitySet Name="UserOpenAnswer" EntityType="Self.UserOpenAnswer" Schema="web" store:Type="Tables" />
+          <AssociationSet Name="FK_CheckAnswer_Question" Association="Self.FK_CheckAnswer_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="CheckAnswer" EntitySet="CheckAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Pool" Association="Self.FK_Question_Pool">
+            <End Role="Pool" EntitySet="Pool" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_QuestionType" Association="Self.FK_Question_QuestionType">
+            <End Role="QuestionType" EntitySet="QuestionType" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCheckAnswer_CheckAnswer" Association="Self.FK_UserCheckAnswer_CheckAnswer">
+            <End Role="CheckAnswer" EntitySet="CheckAnswer" />
+            <End Role="UserCheckAnswer" EntitySet="UserCheckAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCheckAnswer_User" Association="Self.FK_UserCheckAnswer_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserCheckAnswer" EntitySet="UserCheckAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOpenAnswer_Question" Association="Self.FK_UserOpenAnswer_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="UserOpenAnswer" EntitySet="UserOpenAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOpenAnswer_User" Association="Self.FK_UserOpenAnswer_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserOpenAnswer" EntitySet="UserOpenAnswer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CheckAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_ID" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_CheckAnswer_Question" FromRole="CheckAnswer" ToRole="Question" />
+          <NavigationProperty Name="UserCheckAnswers" Relationship="Self.FK_UserCheckAnswer_CheckAnswer" FromRole="CheckAnswer" ToRole="UserCheckAnswer" />
+        </EntityType>
+        <EntityType Name="Pool">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Pool" FromRole="Pool" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pool_ID" Type="Int16" Nullable="false" />
+          <Property Name="Question1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QuestionType_ID" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="CheckAnswers" Relationship="Self.FK_CheckAnswer_Question" FromRole="Question" ToRole="CheckAnswer" />
+          <NavigationProperty Name="Pool" Relationship="Self.FK_Question_Pool" FromRole="Question" ToRole="Pool" />
+          <NavigationProperty Name="QuestionType" Relationship="Self.FK_Question_QuestionType" FromRole="Question" ToRole="QuestionType" />
+          <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UserOpenAnswer_Question" FromRole="Question" ToRole="UserOpenAnswer" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_QuestionType" FromRole="QuestionType" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserCheckAnswers" Relationship="Self.FK_UserCheckAnswer_User" FromRole="User" ToRole="UserCheckAnswer" />
+          <NavigationProperty Name="UserOpenAnswers" Relationship="Self.FK_UserOpenAnswer_User" FromRole="User" ToRole="UserOpenAnswer" />
+        </EntityType>
+        <EntityType Name="UserCheckAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int16" Nullable="false" />
+          <Property Name="CheckAnswer_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CheckAnswer" Relationship="Self.FK_UserCheckAnswer_CheckAnswer" FromRole="UserCheckAnswer" ToRole="CheckAnswer" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserCheckAnswer_User" FromRole="UserCheckAnswer" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserOpenAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Answer" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Question_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_UserOpenAnswer_Question" FromRole="UserOpenAnswer" ToRole="Question" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserOpenAnswer_User" FromRole="UserOpenAnswer" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_CheckAnswer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="CheckAnswer" Type="Self.CheckAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckAnswer">
+              <PropertyRef Name="Question_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCheckAnswer_CheckAnswer">
+          <End Role="CheckAnswer" Type="Self.CheckAnswer" Multiplicity="1" />
+          <End Role="UserCheckAnswer" Type="Self.UserCheckAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckAnswer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserCheckAnswer">
+              <PropertyRef Name="CheckAnswer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Pool">
+          <End Role="Pool" Type="Self.Pool" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pool">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Pool_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_QuestionType">
+          <End Role="QuestionType" Type="Self.QuestionType" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuestionType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOpenAnswer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="UserOpenAnswer" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOpenAnswer">
+              <PropertyRef Name="Question_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCheckAnswer_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserCheckAnswer" Type="Self.UserCheckAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserCheckAnswer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOpenAnswer_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOpenAnswer" Type="Self.UserOpenAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOpenAnswer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PoolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CheckAnswers" EntityType="Self.CheckAnswer" />
+          <EntitySet Name="Pools" EntityType="Self.Pool" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="QuestionTypes" EntityType="Self.QuestionType" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserCheckAnswers" EntityType="Self.UserCheckAnswer" />
+          <EntitySet Name="UserOpenAnswers" EntityType="Self.UserOpenAnswer" />
+          <AssociationSet Name="FK_CheckAnswer_Question" Association="Self.FK_CheckAnswer_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="CheckAnswer" EntitySet="CheckAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCheckAnswer_CheckAnswer" Association="Self.FK_UserCheckAnswer_CheckAnswer">
+            <End Role="CheckAnswer" EntitySet="CheckAnswers" />
+            <End Role="UserCheckAnswer" EntitySet="UserCheckAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Pool" Association="Self.FK_Question_Pool">
+            <End Role="Pool" EntitySet="Pools" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_QuestionType" Association="Self.FK_Question_QuestionType">
+            <End Role="QuestionType" EntitySet="QuestionTypes" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOpenAnswer_Question" Association="Self.FK_UserOpenAnswer_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="UserOpenAnswer" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCheckAnswer_User" Association="Self.FK_UserCheckAnswer_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserCheckAnswer" EntitySet="UserCheckAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOpenAnswer_User" Association="Self.FK_UserOpenAnswer_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserOpenAnswer" EntitySet="UserOpenAnswers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PoolModelContainer" CdmEntityContainer="PoolEntities">
+          <EntitySetMapping Name="CheckAnswers">
+            <EntityTypeMapping TypeName="PoolModel.CheckAnswer">
+              <MappingFragment StoreEntitySet="CheckAnswer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Question_ID" ColumnName="Question_ID" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pools">
+            <EntityTypeMapping TypeName="PoolModel.Pool">
+              <MappingFragment StoreEntitySet="Pool">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="PoolModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Pool_ID" ColumnName="Pool_ID" />
+                <ScalarProperty Name="Question1" ColumnName="Question" />
+                <ScalarProperty Name="QuestionType_ID" ColumnName="QuestionType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="PoolModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PoolModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserCheckAnswers">
+            <EntityTypeMapping TypeName="PoolModel.UserCheckAnswer">
+              <MappingFragment StoreEntitySet="UserCheckAnswer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="CheckAnswer_ID" ColumnName="CheckAnswer_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserOpenAnswers">
+            <EntityTypeMapping TypeName="PoolModel.UserOpenAnswer">
+              <MappingFragment StoreEntitySet="UserOpenAnswer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Question_ID" ColumnName="Question_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

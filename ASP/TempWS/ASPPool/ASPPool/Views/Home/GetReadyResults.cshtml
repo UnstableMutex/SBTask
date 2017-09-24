@@ -1,0 +1,31 @@
+﻿
+@using ASPPools.Models
+@model ASPPools.Models.ResultsModel
+@{
+    Layout = null;
+}
+<h1>Hello @Model.User.Name</h1>
+@foreach (var ans in @Model.Answers)
+{
+    <h2>@ans.Question</h2>
+    if (@ans.QuestionType == 1)
+    {
+        //open
+        var t = @ans as OpenAnswerModel;
+        <p>@t.Answer</p>
+    }
+    if (ans.QuestionType == 2)
+    {
+        var t = @ans as CheckAnswerModel;
+        //checked
+        <ol>
+            @foreach (string answerText in t.Answers)
+                    {
+                <li>
+                    @answerText
+                </li>
+            }
+        </ol>
+    }
+
+}
